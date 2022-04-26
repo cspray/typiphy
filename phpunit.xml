@@ -25,7 +25,7 @@
         </include>
         <report>
             <text outputFile="php://stdout" showUncoveredFiles="true" showOnlySummary="true" />
-            <!--<html outputDirectory=".phpunit.cache/code-coverage/html" />-->
+            <html outputDirectory=".phpunit.cache/code-coverage/html" />
         </report>
     </coverage>
 </phpunit>
