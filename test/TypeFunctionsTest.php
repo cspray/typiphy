@@ -259,4 +259,27 @@ class TypeFunctionsTest extends TestCase {
         $this->assertSame($this::class . '&' . \ReflectionClass::class . '&stdClass', $typeIntersect->getName());
     }
 
+    public function sameTypeIntersects() : array {
+        return [
+            [[objectType($this::class), objectType(Type::class)], [objectType(Type::class), objectType($this::class)]],
+            [[objectType(Type::class), objectType(TypeIntersect::class), objectType(TypeUnion::class)], [objectType(TypeUnion::class), objectType(Type::class), objectType(TypeIntersect::class)]]
+        ];
+    }
+
+    /**
+     * @param array $aTypes
+     * @param array $bTypes
+     * @return void
+     * @dataProvider sameTypeIntersects
+     * @covers \Cspray\Typiphy\Internal\NamedTypeIntersection
+     * @covers \Cspray\Typiphy\Internal\NamedObjectType
+     * @covers ::\Cspray\Typiphy\objectType
+     * @covers ::\Cspray\Typiphy\typeIntersect
+     */
+    public function testTypeIntersectSameObject(array $aTypes, array $bTypes) {
+        $a = typeIntersect(...$aTypes);
+        $b = typeIntersect(...$bTypes);
+        $this->assertSame($a, $b);
+    }
+
 }

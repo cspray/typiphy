@@ -108,6 +108,13 @@ function typeUnion(Type $firstType, Type $secondType, Type... $additionalTypes) 
 }
 
 function typeIntersect(ObjectType $firstType, ObjectType $secondType, ObjectType... $additionalTypes) : TypeIntersect {
+    static $types = [];
     $allTypes = [$firstType, $secondType, ...$additionalTypes];
-    return new NamedTypeIntersection($allTypes);
+    $typeNames = array_map(fn($t) => $t->getName(), $allTypes);
+    sort($typeNames);
+    $key = join('', $typeNames);
+    if (!isset($types[$key])) {
+        $types[$key] = new NamedTypeIntersection($allTypes);
+    }
+    return $types[$key];
 }
