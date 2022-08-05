@@ -7,7 +7,7 @@ interface TypeUnion {
     public function getName() : string;
 
     /**
-     * @return ObjectType[]
+     * @return array<array-key, ObjectType|Type>
      */
     public function getTypes() : array;
 
