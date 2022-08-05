@@ -7,6 +7,11 @@ use Cspray\Typiphy\Internal\NamedType;
 use Cspray\Typiphy\Internal\NamedTypeIntersection;
 use Cspray\Typiphy\Internal\NamedTypeUnion;
 
+require_once dirname(__DIR__, 2) . '/lib/NamedObjectType.php';
+require_once dirname(__DIR__, 2) . '/lib/NamedType.php';
+require_once dirname(__DIR__, 2) . '/lib/NamedTypeIntersection.php';
+require_once dirname(__DIR__, 2) . '/lib/NamedTypeUnion.php';
+
 function stringType() : Type {
     static $type;
     if (!isset($type)) {
@@ -45,14 +50,6 @@ function arrayType() : Type {
         $type = new NamedType('array');
     }
     return $type;
-}
-
-function objectType(string $type) : ObjectType {
-    static $types = [];
-    if (!isset($types[$type])) {
-        $types[$type] = new NamedObjectType($type);
-    }
-    return $types[$type];
 }
 
 function callableType() : Type {
@@ -117,4 +114,12 @@ function typeIntersect(ObjectType $firstType, ObjectType $secondType, ObjectType
         $types[$key] = new NamedTypeIntersection($allTypes);
     }
     return $types[$key];
+}
+
+function objectType(string $type) : ObjectType {
+    static $types = [];
+    if (!isset($types[$type])) {
+        $types[$type] = new NamedObjectType($type);
+    }
+    return $types[$type];
 }
