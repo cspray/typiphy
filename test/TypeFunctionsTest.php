@@ -4,6 +4,21 @@ namespace Cspray\Typiphy;
 
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers ::\Cspray\Typiphy\stringType
+ * @covers ::\Cspray\Typiphy\intType
+ * @covers ::\Cspray\Typiphy\floatType
+ * @covers ::\Cspray\Typiphy\boolType
+ * @covers ::\Cspray\Typiphy\arrayType
+ * @covers ::\Cspray\Typiphy\mixedType
+ * @covers ::\Cspray\Typiphy\iterableType
+ * @covers ::\Cspray\Typiphy\nullType
+ * @covers ::\Cspray\Typiphy\voidType
+ * @covers ::\Cspray\Typiphy\callableType
+ * @covers ::\Cspray\Typiphy\objectType
+ * @covers ::\Cspray\Typiphy\typeUnion
+ * @covers ::\Cspray\Typiphy\typeIntersect
+ */
 class TypeFunctionsTest extends TestCase {
 
     public function fullyQualifiedNameProvider() : array {
@@ -24,17 +39,6 @@ class TypeFunctionsTest extends TestCase {
     /**
      * @return void
      * @dataProvider fullyQualifiedNameProvider
-     * @covers \Cspray\Typiphy\stringType
-     * @covers \Cspray\Typiphy\intType
-     * @covers \Cspray\Typiphy\floatType
-     * @covers \Cspray\Typiphy\boolType
-     * @covers \Cspray\Typiphy\arrayType
-     * @covers \Cspray\Typiphy\mixedType
-     * @covers \Cspray\Typiphy\iterableType
-     * @covers \Cspray\Typiphy\nullType
-     * @covers \Cspray\Typiphy\voidType
-     * @covers \Cspray\Typiphy\callableType
-     * @covers \Cspray\Typiphy\Internal\NamedType
      */
     public function testTypeFullyQualifiedName(string $name, callable $typeProvider) {
         $this->assertSame($name, $typeProvider()->getName());
@@ -42,17 +46,6 @@ class TypeFunctionsTest extends TestCase {
 
     /**
      * @dataProvider fullyQualifiedNameProvider
-     * @covers \Cspray\Typiphy\stringType
-     * @covers \Cspray\Typiphy\intType
-     * @covers \Cspray\Typiphy\floatType
-     * @covers \Cspray\Typiphy\boolType
-     * @covers \Cspray\Typiphy\arrayType
-     * @covers \Cspray\Typiphy\mixedType
-     * @covers \Cspray\Typiphy\iterableType
-     * @covers \Cspray\Typiphy\nullType
-     * @covers \Cspray\Typiphy\voidType
-     * @covers \Cspray\Typiphy\callableType
-     * @covers \Cspray\Typiphy\Internal\NamedType
      */
     public function testTypeToString(string $name, callable $typeProvider) {
         $this->assertSame($name, (string) $typeProvider());
@@ -60,17 +53,6 @@ class TypeFunctionsTest extends TestCase {
 
     /**
      * @dataProvider fullyQualifiedNameProvider
-     * @covers \Cspray\Typiphy\stringType
-     * @covers \Cspray\Typiphy\intType
-     * @covers \Cspray\Typiphy\floatType
-     * @covers \Cspray\Typiphy\boolType
-     * @covers \Cspray\Typiphy\arrayType
-     * @covers \Cspray\Typiphy\mixedType
-     * @covers \Cspray\Typiphy\iterableType
-     * @covers \Cspray\Typiphy\nullType
-     * @covers \Cspray\Typiphy\voidType
-     * @covers \Cspray\Typiphy\callableType
-     * @covers \Cspray\Typiphy\Internal\NamedType
      */
     public function testTypeSameObject(string $name, callable $typeProvider) {
         $this->assertSame($typeProvider(), $typeProvider());
@@ -78,8 +60,6 @@ class TypeFunctionsTest extends TestCase {
 
     /**
      * @return void
-     * @covers ::\Cspray\Typiphy\objectType
-     * @covers \Cspray\Typiphy\Internal\NamedObjectType
      */
     public function testObjectTypeGetFullyQualifiedName() {
         $this->assertSame($this::class, objectType($this::class)->getName());
@@ -87,8 +67,6 @@ class TypeFunctionsTest extends TestCase {
 
     /**
      * @return void
-     * @covers ::\Cspray\Typiphy\objectType
-     * @covers \Cspray\Typiphy\Internal\NamedObjectType
      */
     public function testObjectTypeToString() {
        $this->assertSame($this::class, (string) objectType($this::class));
@@ -96,8 +74,6 @@ class TypeFunctionsTest extends TestCase {
 
     /**
      * @return void
-     * @covers ::\Cspray\Typiphy\objectType
-     * @covers \Cspray\Typiphy\Internal\NamedObjectType
      */
     public function testObjectTypeAreSame() {
         $this->assertSame(objectType($this::class), objectType($this::class));
@@ -105,8 +81,6 @@ class TypeFunctionsTest extends TestCase {
 
     /**
      * @return void
-     * @covers ::\Cspray\Typiphy\objectType
-     * @covers \Cspray\Typiphy\Internal\NamedObjectType
      */
     public function testObjectTypeAreNotSame() {
         $this->assertNotSame(objectType($this::class), objectType(ObjectType::class));
@@ -114,8 +88,6 @@ class TypeFunctionsTest extends TestCase {
 
     /**
      * @return void
-     * @covers ::\Cspray\Typiphy\objectType
-     * @covers \Cspray\Typiphy\Internal\NamedObjectType
      */
     public function testObjectTypeInstanceOfObjectType() {
         $this->assertInstanceOf(ObjectType::class, objectType($this::class));
@@ -123,8 +95,6 @@ class TypeFunctionsTest extends TestCase {
 
     /**
      * @return void
-     * @covers ::\Cspray\Typiphy\objectType
-     * @covers \Cspray\Typiphy\Internal\NamedObjectType
      */
     public function testObjectTypeIsNotClassThrowsException() {
         $this->expectException(\InvalidArgumentException::class);
@@ -142,14 +112,6 @@ class TypeFunctionsTest extends TestCase {
 
     /**
      * @return void
-     * @covers ::\Cspray\Typiphy\stringType
-     * @covers ::\Cspray\Typiphy\intType
-     * @covers ::\Cspray\Typiphy\objectType
-     * @covers ::\Cspray\Typiphy\arrayType
-     * @covers ::\Cspray\Typiphy\typeUnion
-     * @covers \Cspray\Typiphy\Internal\NamedType
-     * @covers \Cspray\Typiphy\Internal\NamedObjectType
-     * @covers \Cspray\Typiphy\Internal\NamedTypeUnion
      * @dataProvider duplicatedTypesProvider
      */
     public function testTypeUnionThrowsExceptionWithDuplicateTypes(array $duplicatedTypes, string $duplicatedType) {
@@ -160,11 +122,6 @@ class TypeFunctionsTest extends TestCase {
 
     /**
      * @return void
-     * @covers \Cspray\Typiphy\Internal\NamedType
-     * @covers \Cspray\Typiphy\Internal\NamedTypeUnion
-     * @covers ::\Cspray\Typiphy\typeUnion
-     * @covers ::\Cspray\Typiphy\stringType
-     * @covers ::\Cspray\Typiphy\voidType
      */
     public function testTypeUnionThrowsExceptionIfVoidIncluded() {
         $this->expectException(\InvalidArgumentException::class);
@@ -174,12 +131,6 @@ class TypeFunctionsTest extends TestCase {
 
     /**
      * @return void
-     * @covers \Cspray\Typiphy\Internal\NamedTypeUnion
-     * @covers \Cspray\Typiphy\Internal\NamedType
-     * @covers ::\Cspray\Typiphy\stringType
-     * @covers ::\Cspray\Typiphy\floatType
-     * @covers ::\Cspray\Typiphy\intType
-     * @covers ::\Cspray\Typiphy\typeUnion
      */
     public function testTypeUnionTypes() {
         $typeUnion = typeUnion(stringType(), intType(), floatType());
@@ -196,11 +147,6 @@ class TypeFunctionsTest extends TestCase {
     /**
      * @dataProvider sameTypeUnions
      * @return void
-     * @covers \Cspray\Typiphy\Internal\NamedTypeUnion
-     * @covers \Cspray\Typiphy\Internal\NamedType
-     * @covers ::\Cspray\Typiphy\stringType
-     * @covers ::\Cspray\Typiphy\intType
-     * @covers ::\Cspray\Typiphy\typeUnion
      */
     public function testTypeUnionSameObject(array $aTypes, array $bTypes) {
         $a = typeUnion(...$aTypes);
@@ -210,12 +156,6 @@ class TypeFunctionsTest extends TestCase {
 
     /**
      * @return void
-     * @covers \Cspray\Typiphy\Internal\NamedTypeUnion
-     * @covers \Cspray\Typiphy\Internal\NamedType
-     * @covers ::\Cspray\Typiphy\stringType
-     * @covers ::\Cspray\Typiphy\floatType
-     * @covers ::\Cspray\Typiphy\intType
-     * @covers ::\Cspray\Typiphy\typeUnion
      */
     public function testTypeUnionName() {
         $typeUnion = typeUnion(stringType(), intType(), floatType());
@@ -224,10 +164,6 @@ class TypeFunctionsTest extends TestCase {
 
     /**
      * @return void
-     * @covers \Cspray\Typiphy\Internal\NamedTypeIntersection
-     * @covers \Cspray\Typiphy\Internal\NamedObjectType
-     * @covers ::\Cspray\Typiphy\objectType
-     * @covers ::\Cspray\Typiphy\typeIntersect
      */
     public function testTypeIntersectThrowsExceptionWithDuplicateTypes() {
         $this->expectException(\InvalidArgumentException::class);
@@ -237,10 +173,6 @@ class TypeFunctionsTest extends TestCase {
 
     /**
      * @return void
-     * @covers \Cspray\Typiphy\Internal\NamedTypeIntersection
-     * @covers \Cspray\Typiphy\Internal\NamedObjectType
-     * @covers ::\Cspray\Typiphy\objectType
-     * @covers ::\Cspray\Typiphy\typeIntersect
      */
     public function testTypeIntersectGetTypes() {
         $typeIntersect = typeIntersect($a = objectType($this::class), $b = objectType(\ReflectionClass::class), $c = objectType('stdClass'));
@@ -249,10 +181,6 @@ class TypeFunctionsTest extends TestCase {
 
     /**
      * @return void
-     * @covers \Cspray\Typiphy\Internal\NamedTypeIntersection
-     * @covers \Cspray\Typiphy\Internal\NamedObjectType
-     * @covers ::\Cspray\Typiphy\objectType
-     * @covers ::\Cspray\Typiphy\typeIntersect
      */
     public function testTypeIntersectGetName() {
         $typeIntersect = typeIntersect(objectType($this::class), objectType(\ReflectionClass::class), objectType('stdClass'));
@@ -271,10 +199,6 @@ class TypeFunctionsTest extends TestCase {
      * @param array $bTypes
      * @return void
      * @dataProvider sameTypeIntersects
-     * @covers \Cspray\Typiphy\Internal\NamedTypeIntersection
-     * @covers \Cspray\Typiphy\Internal\NamedObjectType
-     * @covers ::\Cspray\Typiphy\objectType
-     * @covers ::\Cspray\Typiphy\typeIntersect
      */
     public function testTypeIntersectSameObject(array $aTypes, array $bTypes) {
         $a = typeIntersect(...$aTypes);
