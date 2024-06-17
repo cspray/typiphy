@@ -12,7 +12,7 @@ final class NamedTypeUnion implements TypeUnion {
 
     public function __construct(private readonly array $types) {
         $dupes = [];
-        foreach (array_count_values(array_map(fn($type) => $type->getName(), $this->types)) as $type => $count) {
+        foreach (array_count_values(array_map(fn($type) => $type->name(), $this->types)) as $type => $count) {
             if ($type === 'void') {
                 throw new \InvalidArgumentException('The "void" type can only be used alone and cannot be added to a type union.');
             }
@@ -28,11 +28,11 @@ final class NamedTypeUnion implements TypeUnion {
         }
     }
 
-    public function getName(): string {
-        return join('|', array_map(fn(Type $type) => $type->getName(), $this->types));
+    public function name(): string {
+        return join('|', array_map(fn(Type $type) => $type->name(), $this->types));
     }
 
-    public function getTypes(): array {
+    public function types(): array {
         return $this->types;
     }
 }

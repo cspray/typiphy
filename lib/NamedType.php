@@ -12,10 +12,10 @@ final class NamedType implements Type {
     public function __construct(private readonly string $name) {}
 
     public function __toString(): string {
-        return $this->getName();
+        return $this->name();
     }
 
-    public function getName(): string {
+    public function name(): string {
         return $this->name;
     }
 }

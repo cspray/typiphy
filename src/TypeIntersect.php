@@ -2,16 +2,16 @@
 
 namespace Cspray\Typiphy;
 
-use Countable;
-use IteratorAggregate;
-
 interface TypeIntersect {
 
-    public function getName() : string;
+    /**
+     * @return non-empty-string
+     */
+    public function name() : string;
 
     /**
-     * @return Type[]
+     * @return list<ObjectType>
      */
-    public function getTypes() : array;
+    public function types() : array;
 
 }

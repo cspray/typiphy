@@ -21,10 +21,10 @@ final class NamedObjectType implements ObjectType {
     }
 
     public function __toString(): string {
-        return $this->getName();
+        return $this->name();
     }
 
-    public function getName(): string {
+    public function name(): string {
         return $this->name;
     }
 }

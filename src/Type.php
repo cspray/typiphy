@@ -2,10 +2,11 @@
 
 namespace Cspray\Typiphy;
 
-use Stringable;
+interface Type {
 
-interface Type extends Stringable {
-
-    public function getName() : string;
+    /**
+     * @return non-empty-string
+     */
+    public function name() : string;
 
 }

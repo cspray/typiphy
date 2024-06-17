@@ -95,7 +95,7 @@ function mixedType() : Type {
 function typeUnion(Type $firstType, Type $secondType, Type... $additionalTypes) : TypeUnion {
     static $types = [];
     $allTypes = [$firstType, $secondType, ...$additionalTypes];
-    $typeNames = array_map(fn($t) => $t->getName(), $allTypes);
+    $typeNames = array_map(fn($t) => $t->name(), $allTypes);
     sort($typeNames);
     $key = join('', $typeNames);
     if (!isset($types[$key])) {
@@ -107,7 +107,7 @@ function typeUnion(Type $firstType, Type $secondType, Type... $additionalTypes) 
 function typeIntersect(ObjectType $firstType, ObjectType $secondType, ObjectType... $additionalTypes) : TypeIntersect {
     static $types = [];
     $allTypes = [$firstType, $secondType, ...$additionalTypes];
-    $typeNames = array_map(fn($t) => $t->getName(), $allTypes);
+    $typeNames = array_map(fn($t) => $t->name(), $allTypes);
     sort($typeNames);
     $key = join('', $typeNames);
     if (!isset($types[$key])) {
@@ -116,6 +116,11 @@ function typeIntersect(ObjectType $firstType, ObjectType $secondType, ObjectType
     return $types[$key];
 }
 
+/**
+ * @template T
+ * @param class-string<T> $type
+ * @return ObjectType<T>
+ */
 function objectType(string $type) : ObjectType {
     static $types = [];
     if (!isset($types[$type])) {
