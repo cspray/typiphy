@@ -7,12 +7,14 @@ namespace Cspray\Typiphy;
  *
  * Implementations should take steps to ensure that non-object types cannot be represented by this interface. For example,
  * the type "string" is not an object and therefore should not be able to be represented as an ObjectType.
+ *
+ * @template T
  */
 interface ObjectType extends Type {
 
     /**
-     * @return class-string
+     * @return class-string<T>
      */
-    public function getName() : string;
+    public function name() : string;
 
 }

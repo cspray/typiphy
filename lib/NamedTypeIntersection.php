@@ -2,7 +2,7 @@
 
 namespace Cspray\Typiphy\Internal;
 
-use Cspray\Typiphy\Type;
+use Cspray\Typiphy\ObjectType;
 use Cspray\Typiphy\TypeIntersect;
 
 /**
@@ -10,9 +10,12 @@ use Cspray\Typiphy\TypeIntersect;
  */
 final class NamedTypeIntersection implements TypeIntersect {
 
+    /**
+     * @param list<ObjectType> $types
+     */
     public function __construct(private readonly array $types) {
         $dupes = [];
-        foreach (array_count_values(array_map(fn($type) => $type->getName(), $this->types)) as $type => $count) {
+        foreach (array_count_values(array_map(static fn(ObjectType $type) => $type->name(), $this->types)) as $type => $count) {
             if ($count > 1) {
                 $dupes[] = $type;
             }
@@ -25,11 +28,11 @@ final class NamedTypeIntersection implements TypeIntersect {
         }
     }
 
-    public function getName(): string {
-        return join('&', array_map(fn(Type $type) => $type->getName(), $this->types));
+    public function name(): string {
+        return join('&', array_map(static fn(ObjectType $type) => $type->name(), $this->types));
     }
 
-    public function getTypes(): array {
+    public function types(): array {
         return $this->types;
     }
 }

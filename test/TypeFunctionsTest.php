@@ -21,7 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class TypeFunctionsTest extends TestCase {
 
-    public function fullyQualifiedNameProvider() : array {
+    public static function fullyQualifiedNameProvider() : array {
         return [
             ['string', '\\Cspray\\Typiphy\\stringType'],
             ['int', '\\Cspray\\Typiphy\\intType'],
@@ -41,7 +41,7 @@ class TypeFunctionsTest extends TestCase {
      * @dataProvider fullyQualifiedNameProvider
      */
     public function testTypeFullyQualifiedName(string $name, callable $typeProvider) {
-        $this->assertSame($name, $typeProvider()->getName());
+        $this->assertSame($name, $typeProvider()->name());
     }
 
     /**
@@ -62,7 +62,7 @@ class TypeFunctionsTest extends TestCase {
      * @return void
      */
     public function testObjectTypeGetFullyQualifiedName() {
-        $this->assertSame($this::class, objectType($this::class)->getName());
+        $this->assertSame($this::class, objectType($this::class)->name());
     }
 
     /**
@@ -102,11 +102,11 @@ class TypeFunctionsTest extends TestCase {
         objectType('NotAClass');
     }
 
-    public function duplicatedTypesProvider() : array {
+    public static function duplicatedTypesProvider() : array {
         return [
             [[stringType(), stringType()], "string"],
             [[intType(), stringType(), intType()], "int"],
-            [[objectType($this::class), arrayType(), intType(), objectType($this::class)], $this::class]
+            [[objectType(\stdClass::class), arrayType(), intType(), objectType(\stdClass::class)], \stdClass::class]
         ];
     }
 
@@ -134,10 +134,10 @@ class TypeFunctionsTest extends TestCase {
      */
     public function testTypeUnionTypes() {
         $typeUnion = typeUnion(stringType(), intType(), floatType());
-        $this->assertSame([stringType(), intType(), floatType()], $typeUnion->getTypes());
+        $this->assertSame([stringType(), intType(), floatType()], $typeUnion->types());
     }
 
-    public function sameTypeUnions() : array {
+    public static function sameTypeUnions() : array {
         return [
             [[stringType(), intType()], [stringType(), intType()]],
             [[stringType(), floatType(), intType()], [floatType(), intType(), stringType()]]
@@ -159,7 +159,7 @@ class TypeFunctionsTest extends TestCase {
      */
     public function testTypeUnionName() {
         $typeUnion = typeUnion(stringType(), intType(), floatType());
-        $this->assertSame('string|int|float', $typeUnion->getName());
+        $this->assertSame('string|int|float', $typeUnion->name());
     }
 
     /**
@@ -176,7 +176,7 @@ class TypeFunctionsTest extends TestCase {
      */
     public function testTypeIntersectGetTypes() {
         $typeIntersect = typeIntersect($a = objectType($this::class), $b = objectType(\ReflectionClass::class), $c = objectType('stdClass'));
-        $this->assertSame([$a, $b, $c], $typeIntersect->getTypes());
+        $this->assertSame([$a, $b, $c], $typeIntersect->types());
     }
 
     /**
@@ -184,12 +184,12 @@ class TypeFunctionsTest extends TestCase {
      */
     public function testTypeIntersectGetName() {
         $typeIntersect = typeIntersect(objectType($this::class), objectType(\ReflectionClass::class), objectType('stdClass'));
-        $this->assertSame($this::class . '&' . \ReflectionClass::class . '&stdClass', $typeIntersect->getName());
+        $this->assertSame($this::class . '&' . \ReflectionClass::class . '&stdClass', $typeIntersect->name());
     }
 
-    public function sameTypeIntersects() : array {
+    public static function sameTypeIntersects() : array {
         return [
-            [[objectType($this::class), objectType(Type::class)], [objectType(Type::class), objectType($this::class)]],
+            [[objectType(self::class), objectType(Type::class)], [objectType(Type::class), objectType(self::class)]],
             [[objectType(Type::class), objectType(TypeIntersect::class), objectType(TypeUnion::class)], [objectType(TypeUnion::class), objectType(Type::class), objectType(TypeIntersect::class)]]
         ];
     }

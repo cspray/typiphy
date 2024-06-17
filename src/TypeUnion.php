@@ -4,11 +4,14 @@ namespace Cspray\Typiphy;
 
 interface TypeUnion {
 
-    public function getName() : string;
+    /**
+     * @return non-empty-string
+     */
+    public function name() : string;
 
     /**
-     * @return array<array-key, ObjectType|Type>
+     * @return list<ObjectType|Type>
      */
-    public function getTypes() : array;
+    public function types() : array;
 
 }
